@@ -3,8 +3,7 @@ require "erb"
 require 'yaml'
 
 # FIXME: make cache an option as well as env var
-MYCONF = 'conf/chrisconfig.yml'
-#MYCONF = 'conf/myconfig.yml'
+MYCONF = 'conf/myconfig.yml'
 USECACHE = (ENV['USECACHE'].nil? or ENV['USECACHE'] == '0') ? false : true
 SAVECACHE = ((ENV['SAVECACHE'].nil? or ENV['SAVECACHE'] == '0') and 
              (ENV['UPDATECACHE'].nil? or ENV['UPDATECACHE'] == '0')) ? false : true
@@ -19,6 +18,7 @@ def save_cache(tsdata)
 end
 
 def render_timesheet(tsdata, type=:yaml)
+  @tsdata = tsdata
   if type == :yaml
     rdata = tsdata.to_yaml
   elsif type == :text
@@ -26,11 +26,13 @@ def render_timesheet(tsdata, type=:yaml)
     template = File.open(tmplfile)
     #template = File.open(tmplfile).read.gsub(/^\s+/, '')
     message = ERB.new(template, 0, "%<>")
+    template.close
     rdata = message.result
   elsif type == :html
     tmplfile = "templates/timesheet_tmpl.rhtml"
     template = File.open(tmplfile)
     message = ERB.new(template, 0, "%<>")
+    template.close
     rdata = message.result
     # rdata = "Render HTML and save NOT FINISHED"
   else
@@ -84,6 +86,10 @@ puts "Working on timesheet for #{customer_name}:"
 if USECACHE
   puts "Loading from cache"
   tsdata = YAML.load_file(File.join(File.dirname(__FILE__), CACHEFILE))
+  require 'pp'
+  pp tsdata
+  #pp tsdata[:weeksheets]
+  exit
 else
   puts "Pulling data from web"
   total=0
@@ -105,6 +111,9 @@ else
   }
 end
 
+if SAVECACHE
+  save_cache(tsdata)
+end
 
 if outfile.nil?
   display_timesheet(tsdata, DISPLAYTYPE)
@@ -128,8 +137,5 @@ else
   end
 end
 
-if SAVECACHE
-  save_cache(tsdata)
-end
 #generate template
 
