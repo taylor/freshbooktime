@@ -97,6 +97,9 @@ class FreshTimeCache
     end
     timelist.each do |t|
       TimeEntry.create(
+                       :staff => Staff.find_by_staff_id(t.staff_id),
+                       :project => Project.find_by_project_id(t.project_id),
+                       :task => Task.find_by_task_id(t.task_id),
                        :time_entry_id => t.time_entry_id,
                        :staff__id => t.staff_id,
                        :project__id => t.project_id,

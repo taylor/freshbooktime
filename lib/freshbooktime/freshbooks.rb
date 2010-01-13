@@ -614,7 +614,6 @@ module FreshBooks
   class Time_Entry
     TYPE_MAPPINGS = { 'time_entry_id' => Fixnum, 'project_id' => Fixnum,
       'task_id' => Fixnum, 'hours' => Float , 'staff_id' => Fixnum}
-
     MUTABILITY = { :staff_id => :read_only }
 
     def create
