@@ -1,15 +1,30 @@
 #!/usr/bin/env ruby
+##
+## mailts.rb
+## Login : <taylor@codecafe.com>
+## Started on Sat Sep 19 04:04:39 2009 -0500 Taylor Carpenter
+## $Id$
+
+APPNAME = File.basename(__FILE__)
+SCRIPT_PATH = Dir.chdir(File.expand_path(File.dirname(__FILE__))) { Dir.pwd }
+CONF_PATH = Dir.chdir(SCRIPT_PATH + '/../conf') { Dir.pwd }
+CACHE_DIR = Dir.chdir(SCRIPT_PATH + '/../cache') { Dir.pwd }
+lib_path = Dir.chdir(SCRIPT_PATH + '/../lib') { Dir.pwd }
+
+$:.unshift lib_path
 
 require 'rubygems'
 require 'action_mailer'
 require 'inline_attachment'
 require 'mime/types'
 require 'yaml'
-require 'lib/smtp_tls'
-require 'lib/action_mailer_tls'
+require 'ext/smtp_tls'
+require 'ext/action_mailer_tls'
 require 'pp'
 
-TSCONF = 'conf/timesheet_config.yml'
+TSCONF = CONF_PATH + 'timesheet_config.yml'
+
+#$config = YAML.load_file(CONF_PATH + "/myconfig.yml")
 
 class Mailer < ActionMailer::Base
   def message (from_a, to, cc, bcc, sub, b, *att)
