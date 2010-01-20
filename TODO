@@ -1,3 +1,5 @@
+**** Review mktimesheet.rb (was sqlreader.rb) for spliting/refactor - CHRIS/TAYLOR
+
 ** split render code into lib/freshbooktime/render.rb - TAYLOR
 ** cache into lib/freshbooktime/cache.rb - TAYLOR
 ** write minimal script to use cache lib and save cache - CHRIS
