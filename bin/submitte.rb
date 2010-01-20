@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 ##
-## simplesubmit.rb
-## Login : <chris@mbp.austin.rr.com>
+## submitte.rb
+## Usage: submitte.rb <time entry file>
+##
 ## Started on  Wed Dec 30 18:05:13 2009 Chris McClimans
 ## $Id$
 

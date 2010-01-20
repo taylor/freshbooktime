@@ -1,12 +1,26 @@
 #!/usr/bin/env ruby
+##
+## mktimesheet.rb
+## Usage: mktimesheet.rb <command> [options]
+##
+## $Id$
+
+APPNAME = File.basename(__FILE__)
+SCRIPT_PATH = Dir.chdir(File.expand_path(File.dirname(__FILE__))) { Dir.pwd }
+CONF_PATH = Dir.chdir(SCRIPT_PATH + '/../conf') { Dir.pwd }
+CACHE_DIR = Dir.chdir(SCRIPT_PATH + '/../cache') { Dir.pwd }
+lib_path = Dir.chdir(SCRIPT_PATH + '/../lib') { Dir.pwd }
+
+$:.unshift lib_path
+
+require 'rubygems'
 require 'erb'
 require 'yaml'
 require 'ostruct'
 require 'optparse'
-require 'rubygems'
 require 'active_record'
-require 'lib/freshbooktime/freshbooks'
-require 'lib/freshbooktime/models'
+require 'freshbooktime/freshbooks'
+require 'freshbooktime/models'
 
 class CacheCommandLine
   attr_accessor :opt
