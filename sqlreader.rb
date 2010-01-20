@@ -3,6 +3,7 @@ require 'erb'
 require 'yaml'
 require 'ostruct'
 require 'optparse'
+require 'rubygems'
 require 'active_record'
 require 'lib/freshbooktime/freshbooks'
 require 'lib/freshbooktime/models'
@@ -69,7 +70,9 @@ class CacheCommandLine
     if ARGV.length != 1
       puts "At least one and only one COMMAND allowed"
       puts "The remaining arguments were: #{ARGV.inspect}"
-      return nil
+      puts "Try -h for help"
+      exit 1
+      #return nil
     end
 
     @opt[:command] = case ARGV[0]
@@ -134,7 +137,7 @@ class Cache
     # set date_end and date_start for period
     if @opt[:period] == 1
       date_start = Date.new(@opt[:year],@opt[:month],1)
-      date_end = date_start + 16 #FIXME: make end on option
+      date_end = date_start + 14 #FIXME: make end on option
     elsif @opt[:period] == 2
       date_start = Date.new(@opt[:year],@opt[:month],16)
       # adding 16 days gives us some day next month
